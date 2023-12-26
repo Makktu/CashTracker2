@@ -14,28 +14,36 @@ export default function ManageExpense({ route, navigation }) {
     });
   }, [navigation, isEditing]);
 
+  const deleteExpenseHandler = () => {
+    navigation.goBack();
+  };
+
   const cancelHandler = () => {
-    console.log('cancel');
+    navigation.goBack();
   };
 
   const confirmHandler = () => {
-    isEditing ? console.log('Editing') : console.log('Adding New');
+    navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
-      <Button mode='flat' whenPressed={cancelHandler}>
-        Cancel
-      </Button>
-      <Button mode='' whenPressed={confirmHandler}>
-        {isEditing ? 'Update' : 'Add'}
-      </Button>
+      <View style={styles.buttonsContainer}>
+        <Button style={styles.buttons} mode='flat' whenPressed={cancelHandler}>
+          Cancel
+        </Button>
+        <Button style={styles.buttons} mode='' whenPressed={confirmHandler}>
+          {isEditing ? 'Update' : 'Add'}
+        </Button>
+      </View>
+
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
             icon='trash'
             size={32}
             color={GlobalStyles.colors.error500}
+            whenPressed={deleteExpenseHandler}
           />
         </View>
       )}
@@ -62,5 +70,14 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'flex-end',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttons: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
 });

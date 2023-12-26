@@ -5,7 +5,10 @@ import React from 'react';
 export default function Button({ mode = '', whenPressed, style, children }) {
   return (
     <View style={style}>
-      <Pressable onPress={whenPressed}>
+      <Pressable
+        onPress={whenPressed}
+        style={({ pressed }) => pressed && styles.pressed}
+      >
         <View style={[styles.button, mode === 'flat' && styles.flat]}>
           <Text style={[styles.buttonText, mode === 'flat' && styles.flatText]}>
             {children}
