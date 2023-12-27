@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { GlobalStyles } from './src/admin-files/styles';
 import IconButton from './src/components/UI/IconButton';
 import { Text, View } from 'react-native';
+import ExpensesContextProvider from './store/expenses-context';
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -18,56 +19,58 @@ function ExpensesOverview() {
     console.log('set date style from here');
   };
   return (
-    <BottomTabs.Navigator
-      screenOptions={({ navigation }) => ({
-        headerStyle: {
-          backgroundColor: GlobalStyles.colors.primary500,
-        },
-        headerShadowVisible: false,
-        headerTintColor: 'white',
-        tabBarStyle: {
-          backgroundColor: GlobalStyles.colors.primary500,
-          borderTopWidth: 1,
-          borderTopColor: GlobalStyles.colors.primary200,
-        },
-        tabBarActiveTintColor: GlobalStyles.colors.primary50,
-        headerRight: ({ tintColor }) => {
-          return (
-            <IconButton
-              icon='add'
-              size={40}
-              color={tintColor}
-              whenPressed={() => {
-                navigation.navigate('Manage Expense');
-              }}
-            />
-          );
-        },
-      })}
-    >
-      <BottomTabs.Screen
-        name='Recent Expenses'
-        component={RecentExpenses}
-        options={{
-          title: 'Recent Expenses',
-          tabBarLabel: 'Recent',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='hourglass' size={size} color={color} />
-          ),
-        }}
-      />
-      <BottomTabs.Screen
-        name='All Expenses'
-        component={AllExpenses}
-        options={{
-          title: 'All Expenses',
-          tabBarLabel: 'All Expenses',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name='calendar' size={size} color={color} />
-          ),
-        }}
-      />
-    </BottomTabs.Navigator>
+    <ExpensesContextProvider>
+      <BottomTabs.Navigator
+        screenOptions={({ navigation }) => ({
+          headerStyle: {
+            backgroundColor: GlobalStyles.colors.primary500,
+          },
+          headerShadowVisible: false,
+          headerTintColor: 'white',
+          tabBarStyle: {
+            backgroundColor: GlobalStyles.colors.primary500,
+            borderTopWidth: 1,
+            borderTopColor: GlobalStyles.colors.primary200,
+          },
+          tabBarActiveTintColor: GlobalStyles.colors.primary50,
+          headerRight: ({ tintColor }) => {
+            return (
+              <IconButton
+                icon='add'
+                size={40}
+                color={tintColor}
+                whenPressed={() => {
+                  navigation.navigate('Manage Expense');
+                }}
+              />
+            );
+          },
+        })}
+      >
+        <BottomTabs.Screen
+          name='Recent Expenses'
+          component={RecentExpenses}
+          options={{
+            title: 'Recent Expenses',
+            tabBarLabel: 'Recent',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name='hourglass' size={size} color={color} />
+            ),
+          }}
+        />
+        <BottomTabs.Screen
+          name='All Expenses'
+          component={AllExpenses}
+          options={{
+            title: 'All Expenses',
+            tabBarLabel: 'All Expenses',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name='calendar' size={size} color={color} />
+            ),
+          }}
+        />
+      </BottomTabs.Navigator>
+    </ExpensesContextProvider>
   );
 }
 

@@ -2,14 +2,13 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 import ExpensesSummary from './ExpensesSummary';
 import ExpensesList from './ExpensesList';
-import DUMMY_EXPENSES from '../../util/my-dummy-data';
 import { GlobalStyles } from '../../admin-files/styles';
 
 export default function ExpensesOutput({ expenses, expensesPeriod }) {
   return (
     <View style={styles.container}>
-      <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={expensesPeriod} />
-      <ExpensesList expenses={DUMMY_EXPENSES} />
+      <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
+      <ExpensesList expenses={expenses} />
     </View>
   );
 }

@@ -23,6 +23,7 @@ export default function ManageExpense({ route, navigation }) {
   };
 
   const confirmHandler = () => {
+    // console.log(value);
     navigation.goBack();
   };
 
