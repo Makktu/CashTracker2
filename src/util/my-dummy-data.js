@@ -69,6 +69,6 @@ export default DUMMY_EXPENSES = [
     id: 'e12',
     description: 'Pot Noodle',
     amount: 1.19,
-    date: new Date('2023-12-28'),
+    date: new Date('2024-1-2'),
   },
 ];

@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react';
-import DUMMY_EXPENSES from '../src/util/my-dummy-data';
+import myDummyData from '../src/util/my-dummy-data';
 
 export const ExpensesContext = createContext({
   // define shape of context data
@@ -14,7 +14,7 @@ const getUniqueId = () => {
   return new Date().toString() + Math.random().toString();
 };
 
-const expensesReducer = (state, action) => {
+function expensesReducer(state, action) {
   // check type of 💥action received
   switch (action.type) {
     case 'ADD':
@@ -37,18 +37,19 @@ const expensesReducer = (state, action) => {
     default:
       return state;
   }
-};
+}
 
-const ExpensesContextProvider = ({ children }) => {
+function ExpensesContextProvider({ children }) {
   // this is where all the context logic goes
   // the actual state management logic
-  const [expensesState, dispatch] = useReducer(expensesReducer, DUMMY_EXPENSES);
+  const [expensesState, dispatch] = useReducer(expensesReducer, myDummyData);
 
   function addExpense(expenseData) {
     dispatch({ type: 'ADD', payload: expenseData });
   }
 
   function deleteExpense(id) {
+    console.log('yes?');
     dispatch({ type: 'DELETE', payload: id });
   }
 
@@ -68,6 +69,6 @@ const ExpensesContextProvider = ({ children }) => {
       {children}
     </ExpensesContext.Provider>
   );
-};
+}
 
 export default ExpensesContextProvider;
