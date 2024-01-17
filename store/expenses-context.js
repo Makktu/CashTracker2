@@ -49,7 +49,6 @@ function ExpensesContextProvider({ children }) {
   }
 
   function deleteExpense(id) {
-    console.log('yes?');
     dispatch({ type: 'DELETE', payload: id });
   }
 

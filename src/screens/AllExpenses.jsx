@@ -7,7 +7,11 @@ export default function AllExpenses() {
   const expensesCtx = useContext(ExpensesContext);
   return (
     <View style={styles.container}>
-      <ExpensesOutput expenses={expensesCtx.expenses} expensesPeriod='TOTAL' />
+      <ExpensesOutput
+        expenses={expensesCtx.expenses}
+        expensesPeriod='TOTAL'
+        fallbackText='Tap the + icon to start'
+      />
     </View>
   );
 }

@@ -1,8 +1,9 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { useContext, useLayoutEffect } from 'react';
 import { GlobalStyles } from '../admin-files/styles';
 import IconButton from '../components/UI/IconButton';
 import Button from '../components/UI/Button';
+import ExpenseForm from '../components/manageExpense/ExpenseForm';
 import { ExpensesContext } from '../../store/expenses-context';
 
 export default function ManageExpense({ route, navigation }) {
@@ -18,7 +19,6 @@ export default function ManageExpense({ route, navigation }) {
   }, [navigation, isEditing]);
 
   function deleteExpenseHandler() {
-    console.log(editedExpenseId);
     expensesCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
@@ -28,11 +28,25 @@ export default function ManageExpense({ route, navigation }) {
   };
 
   const confirmHandler = () => {
+    if (isEditing) {
+      expensesCtx.updateExpense(editedExpenseId, {
+        description: 'editTesttt',
+        amount: 9.99,
+        date: new Date('2023-12-31'),
+      });
+    } else {
+      expensesCtx.addExpense({
+        description: 'Testtt',
+        amount: 99.99,
+        date: new Date('2024-01-04'),
+      });
+    }
     navigation.goBack();
   };
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttonsContainer}>
         <Button style={styles.buttons} mode='flat' whenPressed={cancelHandler}>
           Cancel
