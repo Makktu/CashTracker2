@@ -2,7 +2,6 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { useContext, useLayoutEffect } from 'react';
 import { GlobalStyles } from '../admin-files/styles';
 import IconButton from '../components/UI/IconButton';
-import Button from '../components/UI/Button';
 import ExpenseForm from '../components/manageExpense/ExpenseForm';
 import { ExpensesContext } from '../../store/expenses-context';
 
@@ -27,18 +26,18 @@ export default function ManageExpense({ route, navigation }) {
     navigation.goBack();
   };
 
-  const confirmHandler = () => {
+  const confirmHandler = (expenseData) => {
     if (isEditing) {
       expensesCtx.updateExpense(editedExpenseId, {
-        description: 'editTesttt',
-        amount: 9.99,
-        date: new Date('2023-12-31'),
+        description: expenseData.description,
+        amount: expenseData.amount,
+        date: expenseData.date,
       });
     } else {
       expensesCtx.addExpense({
-        description: 'Testtt',
-        amount: 99.99,
-        date: new Date('2024-01-04'),
+        description: expenseData.description,
+        amount: expenseData.amount,
+        date: expenseData.date,
       });
     }
     navigation.goBack();
@@ -46,15 +45,11 @@ export default function ManageExpense({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.buttonsContainer}>
-        <Button style={styles.buttons} mode='flat' whenPressed={cancelHandler}>
-          Cancel
-        </Button>
-        <Button style={styles.buttons} mode='' whenPressed={confirmHandler}>
-          {isEditing ? 'Update' : 'Add'}
-        </Button>
-      </View>
+      <ExpenseForm
+        onCancel={cancelHandler}
+        onSubmit={confirmHandler}
+        isEditing={isEditing}
+      />
 
       {isEditing && (
         <View style={styles.deleteContainer}>
@@ -89,14 +84,5 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'flex-end',
-  },
-  buttonsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttons: {
-    minWidth: 120,
-    marginHorizontal: 8,
   },
 });

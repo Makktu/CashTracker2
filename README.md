@@ -1,3 +1,3 @@
-next up – find problem with all-screen colours and fix
+next up – proper date picker for the form
 
-7 mins into vid 009
+2 mins into vid 009
