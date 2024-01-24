@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Input from './Input';
 import React, { useState } from 'react';
+import DateSelection from '../DateSelection';
 import Button from '../UI/Button';
 
 export default function ExpenseForm({ onCancel, onSubmit, isEditing }) {
@@ -45,8 +46,8 @@ export default function ExpenseForm({ onCancel, onSubmit, isEditing }) {
           }}
           extraStyle={{ marginRight: 4 }}
         />
-
-        <Input
+        <DateSelection />
+        {/* <Input
           overallStyle={styles.rowInput}
           label='Date'
           textInputConfig={{
@@ -57,8 +58,9 @@ export default function ExpenseForm({ onCancel, onSubmit, isEditing }) {
             onChangeText: inputChangedHandler.bind(this, 'date'),
             value: inputValues.date,
           }}
-        />
+        /> */}
       </View>
+
       <Input
         label='Description'
         textInputConfig={{
