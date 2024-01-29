@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Input from './Input';
 import React, { useState } from 'react';
-import DateSelection from '../DateSelection';
 import Button from '../UI/Button';
+import getItemDate from '../../util/date';
 
-export default function ExpenseForm({ onCancel, onSubmit, isEditing }) {
+export default function ExpenseForm({
+  onCancel,
+  onSubmit,
+  isEditing,
+  defaultValues = null,
+}) {
   const [inputValues, setInputValues] = useState({
-    amount: '',
-    date: '',
+    amount: defaultValues ? defaultValues.amount.toFixed(2).toString() : '',
+    date: defaultValues ? getItemDate(defaultValues.date, true) : '',
     description: '',
   });
 
@@ -46,19 +51,18 @@ export default function ExpenseForm({ onCancel, onSubmit, isEditing }) {
           }}
           extraStyle={{ marginRight: 4 }}
         />
-        <DateSelection />
-        {/* <Input
+        <Input
           overallStyle={styles.rowInput}
           label='Date'
           textInputConfig={{
             keyboardType: 'numeric',
             maxLength: 10,
-            placeholder: 'YYY-MM-DD',
+            placeholder: 'YYYY-MM-DD',
             placeholderTextColor: 'black',
             onChangeText: inputChangedHandler.bind(this, 'date'),
             value: inputValues.date,
           }}
-        /> */}
+        />
       </View>
 
       <Input
