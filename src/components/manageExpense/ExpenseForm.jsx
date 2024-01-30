@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import Input from './Input';
 import React, { useState } from 'react';
 import Button from '../UI/Button';
@@ -13,7 +13,7 @@ export default function ExpenseForm({
   const [inputValues, setInputValues] = useState({
     amount: defaultValues ? defaultValues.amount.toFixed(2).toString() : '',
     date: defaultValues ? getItemDate(defaultValues.date, true) : '',
-    description: '',
+    description: defaultValues ? defaultValues.description : '',
   });
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
@@ -32,6 +32,28 @@ export default function ExpenseForm({
       date: new Date(inputValues.date),
       description: inputValues.description,
     };
+
+    // ! INPUT VALIDATION CHECKER AND WARNING-ISSUER +++++++++++++++++++++++++
+    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0;
+    const dateIsValid = expenseData.date.toString() !== 'Invalid Date';
+    const descriptionIsValid = expenseData.description.trim().length > 0;
+
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
+      let warningString = 'These fields are not filled in correctly:\n\n';
+      if (!amountIsValid) {
+        warningString += 'Amount\n';
+      }
+      if (!dateIsValid) {
+        warningString += 'Date\n';
+      }
+      if (!descriptionIsValid) {
+        warningString += 'Description';
+      }
+
+      Alert.alert('Invalid input!', `${warningString}`);
+      return;
+    }
+    // !++++++++++++++++++++++++++++++++++++++++++++++++
 
     onSubmit(expenseData);
   }
