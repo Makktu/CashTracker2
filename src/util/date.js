@@ -19,13 +19,13 @@ export function getDateMinusDays(date, days) {
 
 export default function getItemDate(date) {
   // need the month separated out to check length
-  let theMonth = months[date.getMonth()];
+  // let theMonth = months[date.getMonth()];
 
   // check if month name is too long for the form
   // and if so, shorten it
-  if (theMonth.length > 7) {
-    theMonth.slice(0, 3);
-  }
+  // if (theMonth.length > 7) {
+  //   theMonth.slice(0, 3);
+  // }
 
-  return date.getDate() + ' ' + theMonth + ' ' + date.getFullYear();
+  return date.toISOString().slice(0, 10);
 }

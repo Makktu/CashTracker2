@@ -7,11 +7,17 @@ export default function Input({
   textInputConfig,
   extraStyle,
   overallStyle,
+  isValid,
 }) {
   return (
     <View style={[styles.inputContainer, overallStyle]}>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput style={[styles.textInput, extraStyle]} {...textInputConfig} />
+      <Text style={[styles.label, !isValid && styles.invalidLabel]}>
+        {label}
+      </Text>
+      <TextInput
+        style={[styles.textInput, extraStyle, !isValid && styles.invalidInput]}
+        {...textInputConfig}
+      />
     </View>
   );
 }
@@ -32,5 +38,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 8,
     padding: 6,
+  },
+  invalidLabel: {
+    color: GlobalStyles.colors.error500,
+  },
+  invalidInput: {
+    backgroundColor: GlobalStyles.colors.error50,
   },
 });
