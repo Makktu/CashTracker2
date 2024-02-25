@@ -29,6 +29,7 @@ export default function ExpenseForm({
   // +++++++++++++++++++++++++++++++++++++++
 
   function inputChangedHandler(inputIdentifier, enteredValue) {
+    if (enteredValue.length > 20) return;
     setInputs((currentInputs) => {
       return {
         ...currentInputs,

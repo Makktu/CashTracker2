@@ -1,11 +1,12 @@
 import { createContext, useReducer } from 'react';
-import myDummyData from '../src/util/my-dummy-data';
+// import myDummyData from '../src/util/my-dummy-data';
 
 export const ExpensesContext = createContext({
   // define shape of context data
   // not strictly needed, but useful for autocomplete later
   expenses: [],
   addExpense: ({ description, amount, date }) => {},
+  setExpenses: (expenses) => {},
   deleteExpense: (id) => {},
   updateExpense: (id, { description, amount, date }) => {},
 });
@@ -20,7 +21,8 @@ function expensesReducer(state, action) {
     case 'ADD':
       const id = getUniqueId();
       return [{ ...action.payload, id: id }, ...state];
-
+    case 'SET':
+      return action.payload;
     case 'UPDATE':
       const updatableExpenseIndex = state.findIndex(
         (expense) => expense.id === action.payload.id
@@ -42,10 +44,14 @@ function expensesReducer(state, action) {
 function ExpensesContextProvider({ children }) {
   // this is where all the context logic goes
   // the actual state management logic
-  const [expensesState, dispatch] = useReducer(expensesReducer, myDummyData);
+  const [expensesState, dispatch] = useReducer(expensesReducer, []);
 
   function addExpense(expenseData) {
     dispatch({ type: 'ADD', payload: expenseData });
+  }
+
+  function setExpenses(expenses) {
+    dispatch({ type: 'SET', payload: expenses });
   }
 
   function deleteExpense(id) {
@@ -58,6 +64,7 @@ function ExpensesContextProvider({ children }) {
 
   const value = {
     expenses: expensesState,
+    setExpenses: setExpenses,
     addExpense: addExpense,
     deleteExpense: deleteExpense,
     updateExpense: updateExpense,
