@@ -19,10 +19,10 @@ function expensesReducer(state, action) {
   // check type of 💥action received
   switch (action.type) {
     case 'ADD':
-      const id = getUniqueId();
-      return [{ ...action.payload, id: id }, ...state];
+      return [action.payload, ...state];
     case 'SET':
-      return action.payload;
+      const inverted = action.payload.reverse();
+      return inverted;
     case 'UPDATE':
       const updatableExpenseIndex = state.findIndex(
         (expense) => expense.id === action.payload.id
