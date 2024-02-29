@@ -6,7 +6,7 @@ import { GlobalStyles } from '../../admin-files/styles';
 export default function ErrorOverlay({ message, onConfirm }) {
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, styles.title]}>An error occurred...</Text>
+      <Text style={[styles.text, styles.title]}>An error occurred.</Text>
       <Text style={styles.text}>{message}</Text>
       <Button onPress={onConfirm}>OK</Button>
     </View>
@@ -24,9 +24,11 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     marginBottom: 8,
+    color: GlobalStyles.colors.primary100,
+    fontSize: 22,
   },
   title: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
   },
 });

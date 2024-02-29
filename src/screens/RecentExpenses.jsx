@@ -1,27 +1,39 @@
 import { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import PrimaryButton from '../components/PrimaryButton';
+import { StyleSheet, View } from 'react-native';
 import ExpensesOutput from '../components/ExpensesOutput/ExpensesOutput';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
+import ErrorOverlay from '../components/UI/ErrorOverlay';
 import { ExpensesContext } from '../../store/expenses-context';
 import { getDateMinusDays } from '../util/date';
 import { fetchExpenses } from '../util/http';
-// import { useState } from 'react/cjs/react.production.min';
 
 export default function RecentExpenses() {
   const [isFetching, setIsFetching] = useState(true);
-  const [error, setError] = useState();
+  const [error, setError] = useState(); // initially no error
 
   const expensesCtx = useContext(ExpensesContext);
 
   useEffect(() => {
     async function getExpenses() {
-      const expenses = await fetchExpenses();
+      setIsFetching(true);
+      try {
+        const expenses = await fetchExpenses();
+        expensesCtx.setExpenses(expenses);
+      } catch (error) {
+        setError('Could not fetch expenses...');
+      }
       setIsFetching(false);
-      expensesCtx.setExpenses(expenses);
     }
     getExpenses();
   }, []);
+
+  function errorHandler() {
+    setError(null);
+  }
+
+  if (error && !isFetching) {
+    return <ErrorOverlay message={error} onConfirm={errorHandler} />;
+  }
 
   if (isFetching) {
     return <LoadingOverlay />;

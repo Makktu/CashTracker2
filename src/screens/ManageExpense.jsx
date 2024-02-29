@@ -4,6 +4,7 @@ import { GlobalStyles } from '../admin-files/styles';
 import IconButton from '../components/UI/IconButton';
 import ExpenseForm from '../components/manageExpense/ExpenseForm';
 import LoadingOverlay from '../components/UI/LoadingOverlay';
+import ErrorOverlay from '../components/UI/ErrorOverlay';
 import { ExpensesContext } from '../../store/expenses-context';
 import { storeExpense, updateExpense, deleteExpense } from '../util/http';
 
